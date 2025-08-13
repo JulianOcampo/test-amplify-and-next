@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
   experimental: {
     serverComponentsExternalPackages: [
       "ffmpeg-static",
-      "puppeteer",
       "puppeteer-core",
       "@sparticuz/chromium"
     ],

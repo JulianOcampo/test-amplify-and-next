@@ -5,50 +5,48 @@ import path from "path";
 import { tmpdir } from "os";
 import crypto from "crypto";
 
-import puppeteer from "puppeteer";
-import puppeteerCore from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 
+// Conversión a WAV usando ffmpeg-static
 export function convertToWav(inputPath: string): Promise<string> {
-  const outputPath = path.join(tmpdir(), crypto.randomUUID() + ".wav");
-  console.log("Usando ffmpeg:", ffmpegStatic);
-  console.log("Existe:", fs.existsSync(ffmpegStatic as string));
+    const outputPath = path.join(tmpdir(), crypto.randomUUID() + ".wav");
+    console.log("Usando ffmpeg:", ffmpegStatic);
+    console.log("Existe:", fs.existsSync(ffmpegStatic as string));
 
-  return new Promise((resolve, reject) => {
-    const ffmpeg = spawn(ffmpegStatic as string, [
-      "-i", inputPath,
-      "-ar", "16000",
-      "-ac", "1",
-      outputPath
-    ]);
+    return new Promise((resolve, reject) => {
+        const ffmpeg = spawn(ffmpegStatic as string, [
+            "-i", inputPath,
+            "-ar", "16000",
+            "-ac", "1",
+            outputPath
+        ]);
 
-    ffmpeg.stderr.on("data", (d) => console.log("[ffmpeg]", d.toString()));
-    ffmpeg.on("error", reject);
-    ffmpeg.on("close", (code) => {
-      if (code === 0) resolve(outputPath);
-      else reject(new Error(`ffmpeg salió con código ${code}`));
+        ffmpeg.stderr.on("data", (d) => console.log("[ffmpeg]", d.toString()));
+        ffmpeg.on("error", reject);
+        ffmpeg.on("close", (code) => {
+            if (code === 0) resolve(outputPath);
+            else reject(new Error(`ffmpeg salió con código ${code}`));
+        });
     });
-  });
 }
 
-
+// Generar PDF usando Puppeteer Core y Chromium reducido
 export async function generatePdfFromHtml(html: string) {
-  const isAmplify = !!process.env.AWS_EXECUTION_ENV;
-  console.log("Generando PDF. Entorno Amplify:", isAmplify);
+    console.log("Generando PDF. Entorno Amplify:", !!process.env.AWS_EXECUTION_ENV);
 
-  const browser = isAmplify
-    ? await puppeteerCore.launch({
-        args: chromium.args,
+    const browser = await puppeteer.launch({
+        args: [...chromium.args, "--ignore-certificate-errors"],
+        defaultViewport: { width: 1280, height: 800 },
         executablePath: await chromium.executablePath(),
-        headless: true,
-      })
-    : await puppeteer.launch({
-        headless: true,
-      });
+        headless: true
+    });
 
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "domcontentloaded" });
-  const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
-  await browser.close();
-  return pdfBuffer;
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "domcontentloaded" });
+    const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
+    await browser.close();
+    return pdfBuffer;
 }
+
+
