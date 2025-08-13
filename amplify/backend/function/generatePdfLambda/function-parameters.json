@@ -1,0 +1,6 @@
+{
+    "functionName": "generatePdfLambda",
+    "runtime": "nodejs20.x",
+    "timeout": 25,
+    "memorySize": 1024
+}
