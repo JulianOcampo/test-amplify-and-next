@@ -31,6 +31,7 @@ export function convertToWav(inputPath: string): Promise<string> {
   });
 }
 
+
 export async function generatePdfFromHtml(html: string) {
   const isAmplify = !!process.env.AWS_EXECUTION_ENV;
   console.log("Generando PDF. Entorno Amplify:", isAmplify);
@@ -39,10 +40,10 @@ export async function generatePdfFromHtml(html: string) {
     ? await puppeteerCore.launch({
         args: chromium.args,
         executablePath: await chromium.executablePath(),
-        headless: true
+        headless: true,
       })
     : await puppeteer.launch({
-        headless: true
+        headless: true,
       });
 
   const page = await browser.newPage();

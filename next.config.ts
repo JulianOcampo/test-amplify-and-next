@@ -5,10 +5,11 @@ const nextConfig: NextConfig = {
   experimental: {
     serverComponentsExternalPackages: [
       "ffmpeg-static",
+      "puppeteer",
       "puppeteer-core",
       "@sparticuz/chromium"
     ],
-     /** @ts-ignore */
+    /** @ts-ignore */
     outputFileTracingIncludes: {
       '/**/*': ['./node_modules/ffmpeg-static/ffmpeg']
     }
