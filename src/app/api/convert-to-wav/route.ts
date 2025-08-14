@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import { generateClient } from "aws-amplify/data";
+import { Schema } from "@amplify/data/resource";
+
+const client = generateClient<Schema>();
 
 export async function POST(request: Request) {
   try {
@@ -7,21 +11,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing fileUrl" }, { status: 400 });
     }
 
-    const lambdaUrl = process.env.CONVERT_WAV_LAMBDA_URL!;
-    const lambdaRes = await fetch(lambdaUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fileUrl }),
-    });
+    const { data, errors } = await client.queries.convertToWav({ fileUrl });
 
-    if (!lambdaRes.ok) {
-      const errText = await lambdaRes.text();
-      return NextResponse.json({ error: errText }, { status: lambdaRes.status });
+    if (errors) {
+      return NextResponse.json({ error: errors[0].message }, { status: 500 });
     }
 
-    const bufferBase64 = await lambdaRes.text();
-    const buffer = Buffer.from(bufferBase64, "base64");
-
+    const buffer = Buffer.from(data as string, "base64");
     return new NextResponse(buffer, {
       headers: { "Content-Type": "audio/wav" },
     });

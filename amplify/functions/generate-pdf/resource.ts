@@ -4,5 +4,6 @@ export const generatePdf = defineFunction({
   name: "generate-pdf",
   entry: "./handler.ts",
   runtime: 20,
-  timeoutSeconds: 30
+  timeoutSeconds: 360,
+  memoryMB: 2048,
 });

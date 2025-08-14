@@ -4,5 +4,6 @@ export const convertToWav = defineFunction({
   name: "convert-to-wav",
   entry: "./handler.ts",
   runtime: 20,
-  timeoutSeconds: 30
+  timeoutSeconds: 900,
+  memoryMB: 3008,
 });

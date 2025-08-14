@@ -5,5 +5,7 @@ import { sayHello } from './functions/say-hello/resource';
 
 
 defineBackend({
+  convertToWav,
+  generatePdf,
   sayHello
 });
