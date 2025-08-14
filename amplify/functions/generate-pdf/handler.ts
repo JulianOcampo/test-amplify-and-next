@@ -1,7 +1,8 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+import { Schema } from "../../data/resource";
 
-export const handler = async (event: { arguments: { html: string } }) => {
+export const handler: Schema["generatePdf"]["functionHandler"] = async (event) => {
   const html = event.arguments.html;
   if (!html) throw new Error("Missing html");
 

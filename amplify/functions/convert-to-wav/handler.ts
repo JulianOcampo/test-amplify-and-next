@@ -1,9 +1,10 @@
 import { spawn } from "child_process";
 import ffmpegStatic from "ffmpeg-static";
 import https from "https";
+import { Schema } from "../../data/resource";
 
-export const handler = async (event: { fileUrl: string }) => {
-  if (!event.fileUrl) throw new Error("Missing fileUrl");
+export const handler: Schema["convertToWav"]["functionHandler"] = async (event) => {
+  if (!event.arguments.fileUrl) throw new Error("Missing fileUrl");
 
   return await new Promise<string>((resolve, reject) => {
     const ffmpeg = spawn(ffmpegStatic as string, [
@@ -27,7 +28,7 @@ export const handler = async (event: { fileUrl: string }) => {
       }
     });
 
-    https.get(event.fileUrl, { rejectUnauthorized: false }, (res) => {
+    https.get(event.arguments.fileUrl!, { rejectUnauthorized: false }, (res) => {
       res.pipe(ffmpeg.stdin);
     }).on("error", reject);
   });

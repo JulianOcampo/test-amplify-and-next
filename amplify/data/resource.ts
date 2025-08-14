@@ -16,7 +16,6 @@ const schema = a.schema({
     .arguments({ fileUrl: a.string() })
     .returns(a.string())
     .handler(a.handler.function(convertToWav)),
-
   generatePdf: a.mutation()
     .arguments({ html: a.string() })
     .returns(a.string())
