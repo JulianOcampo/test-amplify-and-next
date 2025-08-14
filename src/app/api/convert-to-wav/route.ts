@@ -1,5 +1,6 @@
-import { client } from "@/lib/amplify/client";
+import "@/lib/amplify/configure"; 
 import { NextResponse } from "next/server";
+import { client } from "@/lib/amplify/data/client";
 
 export async function POST(request: Request) {
   try {
