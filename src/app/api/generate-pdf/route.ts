@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { generatePdf } from "@amplify/generate-pdf/resource";
+import { generatePdf } from "@amplify/functions/generate-pdf/resource";
 import { client } from "@/amplify/data/client";
 
 export async function POST(request: Request) {
