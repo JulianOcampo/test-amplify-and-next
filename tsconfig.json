@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@amplify/*": [
+        "./amplify/*"
       ]
     }
   },
@@ -32,7 +35,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "amplify"
   ],
   "exclude": [
     "node_modules"

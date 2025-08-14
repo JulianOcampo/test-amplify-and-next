@@ -1,40 +1,38 @@
 import { spawn } from "child_process";
-import ffmpegStatic from "ffmpeg-static";
-import fs from "fs";
 import path from "path";
 import { tmpdir } from "os";
 import crypto from "crypto";
+import fs from "fs";
+import ffmpegStatic from "ffmpeg-static";
+import https from "https";
 
-export const handler = async (event: any) => {
-  const inputUrl = event?.inputUrl;
-  if (!inputUrl) {
-    return { statusCode: 400, body: "inputUrl is required" };
-  }
+export const handler = async (event: { fileUrl: string }) => {
+  if (!event.fileUrl) throw new Error("Missing fileUrl");
 
+  const inputPath = path.join(tmpdir(), crypto.randomUUID());
   const outputPath = path.join(tmpdir(), crypto.randomUUID() + ".wav");
 
-  return new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
+    const file = fs.createWriteStream(inputPath);
+    https.get(event.fileUrl, { rejectUnauthorized: false }, res => {
+      res.pipe(file);
+      file.on("finish", () => file.close(() => resolve()));
+    }).on("error", reject);
+  });
+
+  await new Promise<void>((resolve, reject) => {
     const ffmpeg = spawn(ffmpegStatic as string, [
-      "-i", inputUrl,
+      "-i", inputPath,
       "-ar", "16000",
       "-ac", "1",
       outputPath
     ]);
-
-    ffmpeg.stderr.on("data", (d) => console.log("[ffmpeg]", d.toString()));
-    ffmpeg.on("error", reject);
-    ffmpeg.on("close", (code) => {
-      if (code === 0) {
-        const wavData = fs.readFileSync(outputPath);
-        resolve({
-          statusCode: 200,
-          isBase64Encoded: true,
-          headers: { "Content-Type": "audio/wav" },
-          body: wavData.toString("base64")
-        });
-      } else {
-        reject(new Error(`ffmpeg exited with code ${code}`));
-      }
+    ffmpeg.on("close", code => {
+      if (code === 0) resolve();
+      else reject(new Error(`ffmpeg exited with code ${code}`));
     });
   });
+
+  const buffer = fs.readFileSync(outputPath);
+  return buffer.toString("base64");
 };

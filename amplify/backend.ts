@@ -1,8 +1,8 @@
-import { defineBackend } from "@aws-amplify/backend";
-import { convertToWavFunction } from "./convert-to-wav/resource";
-import { generatePdfFunction } from "./generate-pdf/resource";
+import { a, defineBackend } from "@aws-amplify/backend";
+import { convertToWav } from "./convert-to-wav/resource";
+import { generatePdf } from "./generate-pdf/resource";
 
 defineBackend({
-  convertToWavFunction,
-  generatePdfFunction
+  generatePdf,
+  convertToWav
 });

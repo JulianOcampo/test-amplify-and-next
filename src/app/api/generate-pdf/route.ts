@@ -1,30 +1,24 @@
 import { NextResponse } from "next/server";
 
+import { generatePdf } from "@amplify/generate-pdf/resource";
+import { client } from "@/amplify/data/client";
+
 export async function POST(request: Request) {
   try {
+
     const { html } = await request.json();
     if (!html) {
       return NextResponse.json({ error: "Missing html" }, { status: 400 });
     }
 
-    const lambdaUrl = process.env.GENERATE_PDF_LAMBDA_URL!;
-    const lambdaRes = await fetch(lambdaUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html }),
-    });
+    // Ejecuta la Lambda y recibe el PDF en base64
+    // const { data: pdfBase64 } = await runFunction(generatePdf, { html });
 
-    if (!lambdaRes.ok) {
-      const errText = await lambdaRes.text();
-      return NextResponse.json({ error: errText }, { status: lambdaRes.status });
-    }
+    //const buffer = Buffer.from(pdfBase64, "base64");
 
-    const bufferBase64 = await lambdaRes.text();
-    const buffer = Buffer.from(bufferBase64, "base64");
-
-    return new NextResponse(buffer, {
-      headers: { "Content-Type": "application/pdf" },
-    });
+    //return new NextResponse(buffer, {
+    // headers: { "Content-Type": "application/pdf" },
+    // });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
