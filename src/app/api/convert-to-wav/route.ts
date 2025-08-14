@@ -1,8 +1,5 @@
+import { client } from "@/lib/amplify/client";
 import { NextResponse } from "next/server";
-import { generateClient } from "aws-amplify/data";
-import { Schema } from "@amplify/data/resource";
-
-const client = generateClient<Schema>();
 
 export async function POST(request: Request) {
   try {
