@@ -10,17 +10,17 @@ const schema = a.schema({
       name: a.string(),
     })
     .returns(a.string())
-    .authorization(allow => [allow.guest()])
+    .authorization(allow => [allow.publicApiKey()])
     .handler(a.handler.function(sayHello)),
   convertToWav: a.mutation()
     .arguments({ fileUrl: a.string() })
     .returns(a.string())
-    .authorization(allow => [allow.guest()])
+    .authorization(allow => [allow.publicApiKey()])
     .handler(a.handler.function(convertToWav)),
   generatePdf: a.mutation()
     .arguments({ html: a.string() })
     .returns(a.string())
-    .authorization(allow => [allow.guest()])
+    .authorization(allow => [allow.publicApiKey()])
     .handler(a.handler.function(generatePdf)),
 });
 
