@@ -11,14 +11,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing html" }, { status: 400 });
     }
 
-    // Ejecuta la Lambda y recibe el PDF en base64
-    // const { data: pdfBase64 } = await runFunction(generatePdf, { html });
+    const { data: pdfBase64 } = await runFunction(generatePdf, { html });
 
-    //const buffer = Buffer.from(pdfBase64, "base64");
+    const buffer = Buffer.from(pdfBase64, "base64");
 
-    //return new NextResponse(buffer, {
-    // headers: { "Content-Type": "application/pdf" },
-    // });
+    return new NextResponse(buffer, {
+      headers: { "Content-Type": "application/pdf" },
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
