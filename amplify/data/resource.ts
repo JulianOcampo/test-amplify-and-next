@@ -15,10 +15,12 @@ const schema = a.schema({
   convertToWav: a.mutation()
     .arguments({ fileUrl: a.string() })
     .returns(a.string())
+    .authorization(allow => [allow.guest()])
     .handler(a.handler.function(convertToWav)),
   generatePdf: a.mutation()
     .arguments({ html: a.string() })
     .returns(a.string())
+    .authorization(allow => [allow.guest()])
     .handler(a.handler.function(generatePdf)),
 });
 
