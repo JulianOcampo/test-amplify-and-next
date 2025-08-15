@@ -46,13 +46,13 @@ jobs:
 
       - name: Create utils.zip
         run: |
-          mkdir -p layers/nodejs
-          cp -r layers/puppeteer-utils/dist/* layers/nodejs/
-          cp -r layers/puppeteer-utils/node_modules layers/nodejs/
-          cp layers/puppeteer-utils/package.json layers/nodejs/
-          cd layers/nodejs
-          zip -r ../../utils.zip .
-          cd ../..
+          mkdir -p layer-build/nodejs
+          cp -r layers/puppeteer-utils/dist/* layer-build/nodejs/
+          cp -r layers/puppeteer-utils/node_modules layer-build/nodejs/
+          cp layers/puppeteer-utils/package.json layer-build/nodejs/
+          cd layer-build
+          zip -r ../utils.zip nodejs
+          cd ..
 
       # ---------- UPLOAD ----------
       - name: Upload ffmpeg.zip to S3
