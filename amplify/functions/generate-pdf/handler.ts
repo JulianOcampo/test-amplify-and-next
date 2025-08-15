@@ -1,8 +1,9 @@
 import { Schema } from "../../data/resource";
-import { generatePdfFromHtml } from "/opt/nodejs/utils"; 
 
 export const handler: Schema["generatePdf"]["functionHandler"] = async (event) => {
   if (!event.arguments.html) throw new Error("Missing html");
+  // @ts-ignore: dynamic import from Lambda Layer
+  const { generatePdfFromHtml } = await import("/opt/nodejs/utils");
 
   return await new Promise<string>(async (resolve, reject) => {
     try {
