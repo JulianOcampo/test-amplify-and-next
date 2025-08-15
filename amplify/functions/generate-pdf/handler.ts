@@ -6,7 +6,7 @@ export const handler: Schema["generatePdf"]["functionHandler"] = async (event) =
   return await new Promise<string>(async (resolve, reject) => {
     try {
       // @ts-ignore: Este import solo existe en Lambda con la Layer
-      const { generatePdfFromHtml } = await import("/opt/nodejs/node_modules/lambda-utils");
+      const { generatePdfFromHtml } = await import("/opt/nodejs/node_modules/lambda-utils/dist/index.js");
 
       const pdfBuffer = await generatePdfFromHtml(event.arguments.html);
       resolve(pdfBuffer.toString("base64"));
