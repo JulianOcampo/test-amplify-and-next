@@ -11,7 +11,6 @@
   "dependencies": {
     "@sparticuz/chromium": "^138.0.2",
     "aws-amplify": "^6.6.6",
-    "ffmpeg-static": "^5.2.0",
     "fs": "^0.0.1-security",
     "next": "^15.4.6",
     "puppeteer-core": "^24.16.1",
