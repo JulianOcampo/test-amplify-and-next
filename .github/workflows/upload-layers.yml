@@ -44,15 +44,11 @@ jobs:
         working-directory: layers/puppeteer-utils
         run: npm run build
 
-      - name: Create utils.zip
+      - name: Create utils.zip simplified
         run: |
-          mkdir -p layer-build/nodejs
-          cp -r layers/puppeteer-utils/dist/* layer-build/nodejs/
-          cp -r layers/puppeteer-utils/node_modules layer-build/nodejs/
-          cp layers/puppeteer-utils/package.json layer-build/nodejs/
-          cd layer-build
-          zip -r ../utils.zip nodejs
-          cd ..
+          mkdir -p nodejs
+          cp -r layers/puppeteer-utils/ nodejs
+          zip -r utils.zip nodejs
 
       # ---------- UPLOAD ----------
       - name: Upload ffmpeg.zip to S3
