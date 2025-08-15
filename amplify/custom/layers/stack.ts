@@ -9,7 +9,7 @@ interface StackContext {
 export function defineResources({ stack }: StackContext) {
     // 1️⃣ Crear bucket para almacenar layers
     const layersBucket = new s3.Bucket(stack, "LambdaLayersBucket", {
-        bucketName: `${stack.stackName.toLowerCase()}-lambda-layers`,
+        bucketName: `was-shared-lambda-layers`,
         removalPolicy: RemovalPolicy.RETAIN, // para no borrarlo al destruir el stack
         blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
         versioned: true,

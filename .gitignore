@@ -45,3 +45,6 @@ next-env.d.ts
 amplify_outputs*
 amplifyconfiguration*
 amplify/functions/*/node_modules
+amplify/functions/*/dist
+layers/*/node_modules
+layers/*/dist

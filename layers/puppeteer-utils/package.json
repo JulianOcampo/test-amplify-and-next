@@ -1,0 +1,16 @@
+{
+  "name": "lambda-layer-puppeteer",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "dependencies": {
+    "puppeteer-core": "^19.11.1",
+    "@sparticuz/chromium": "^138.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
