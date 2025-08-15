@@ -8,13 +8,11 @@ interface StackContext {
 
 export function defineResources({ stack }: StackContext) {
     // 1️⃣ Crear bucket para almacenar layers
-    const layersBucket = new s3.Bucket(stack, "LambdaLayersBucket", {
-        bucketName: `was-shared-lambda-layers`,
-        removalPolicy: RemovalPolicy.RETAIN, // para no borrarlo al destruir el stack
-        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-        versioned: true,
-    });
-
+    const layersBucket = s3.Bucket.fromBucketName(
+        stack,
+        "LambdaLayersBucket",
+        "was-shared-lambda-layers"
+    );
     // 2️⃣ Definir layers tomando el .zip desde el bucket
     //    Ojo: estos .zip deben estar subidos antes del deploy o después con un paso manual/CI
     const ffmpegLayer = new lambda.LayerVersion(stack, "FfmpegLayer", {
@@ -31,5 +29,5 @@ export function defineResources({ stack }: StackContext) {
         code: lambda.Code.fromBucket(layersBucket, "puppeteer-utils.zip"), // clave del archivo en el bucket
     });
 
-    return { layersBucket, ffmpegLayer,  puppeteerUtilsLayer };
+    return { layersBucket, ffmpegLayer, puppeteerUtilsLayer };
 }
