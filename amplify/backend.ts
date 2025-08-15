@@ -15,7 +15,10 @@ const backend = defineBackend({
 const custom = backend.createStack("WASCustomLayers");
 const { ffmpegLayer, puppeteerUtilsLayer } = defineResources({ stack: custom });
 
-backend.convertToWav.resources.cfnResources.cfnFunction.layers?.push(ffmpegLayer.layerVersionArn);
+backend.convertToWav.resources.cfnResources.cfnFunction.layers = [
+  ffmpegLayer.layerVersionArn
+];
 
-backend.generatePdf.resources.cfnResources.cfnFunction.layers?.push(puppeteerUtilsLayer.layerVersionArn);
-
+backend.generatePdf.resources.cfnResources.cfnFunction.layers = [
+  puppeteerUtilsLayer.layerVersionArn
+];
