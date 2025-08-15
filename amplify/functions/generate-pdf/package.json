@@ -5,7 +5,7 @@
   "dependencies": {
     "puppeteer-core": "^24.16.2"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "@sparticuz/chromium": "^119.0.0"
   }
 }
