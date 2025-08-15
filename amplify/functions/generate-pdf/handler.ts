@@ -9,7 +9,8 @@ export const handler: Schema["generatePdf"]["functionHandler"] = async (event) =
   const browser = await puppeteer.launch({
     args: chromium.args,
     executablePath: await chromium.executablePath(),
-    headless: true
+    headless: true,
+    ignoreHTTPSErrors: true
   });
 
   const page = await browser.newPage();
