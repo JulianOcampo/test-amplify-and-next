@@ -48,6 +48,8 @@ jobs:
         run: |
           mkdir -p layers/nodejs
           cp -r layers/puppeteer-utils/dist/* layers/nodejs/
+          cp -r layers/puppeteer-utils/node_modules layers/nodejs/
+          cp layers/puppeteer-utils/package.json layers/nodejs/
           cd layers/nodejs
           zip -r ../../utils.zip .
           cd ../..

@@ -48,3 +48,5 @@ amplify/functions/*/node_modules
 amplify/functions/*/dist
 layers/*/node_modules
 layers/*/dist
+layers/nodejs
+*.zip
