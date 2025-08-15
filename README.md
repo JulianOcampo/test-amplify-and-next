@@ -44,3 +44,7 @@ npx aws-cdk@latest bootstrap aws://$(aws sts get-caller-identity --query Account
 npx ampx sandbox --profile julian-personal-admin --identifier julianocampo
 
 npx ampx generate outputs --stack amplify-testamplifyandnext-julianocampo-sandbox-<id> --profile julian-personal-admin
+
+
+generacion de layer para ffmpeg 
+https://virkud-sarvesh.medium.com/building-ffmpeg-layer-for-a-lambda-function-a206f36d3edc

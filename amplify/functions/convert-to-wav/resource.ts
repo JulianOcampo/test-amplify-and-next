@@ -6,4 +6,8 @@ export const convertToWav = defineFunction({
   runtime: 20,
   timeoutSeconds: 900,
   memoryMB: 3008,
+  layers: {
+    "@ffmpeg":
+      "arn:aws:lambda:us-east-2:018889390014:layer:ffmpeg-layer:2",
+  },
 });
