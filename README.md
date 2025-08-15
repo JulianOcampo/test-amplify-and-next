@@ -48,3 +48,4 @@ npx ampx generate outputs --stack amplify-testamplifyandnext-julianocampo-sandbo
 
 generacion de layer para ffmpeg 
 https://virkud-sarvesh.medium.com/building-ffmpeg-layer-for-a-lambda-function-a206f36d3edc
+https://konarskis.substack.com/p/puppeteer-aws-lambda?triedRedirect=true

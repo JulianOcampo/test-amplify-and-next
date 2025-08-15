@@ -1,9 +1,0 @@
-{
-  "name": "generate-pdf",
-  "main": "resource.ts",
-  "type": "module",
-  "devDependencies": {
-    "puppeteer-core": "^19.11.1",
-    "@sparticuz/chromium": "^138.0.2"
-  }
-}
